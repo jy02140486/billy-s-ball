@@ -6,6 +6,9 @@ void T_App::render()
 {
 	mpDisplayWindow->get_gc().clear(CL_Colorf::black);
 	
+
+	_datapool.drawCircle(&(mpDisplayWindow->get_gc()),_datapool.tempbody);
+
 	mpWinManager->draw_windows(mpDisplayWindow->get_gc());
 		
 	mpDisplayWindow->flip();

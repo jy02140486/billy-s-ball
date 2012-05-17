@@ -5,6 +5,7 @@
 #include "event.h"
 
 #include "globals.h"
+#include "../Entites/data_pool.h"
 
 #include <list>
 #include<stdio.h>
@@ -19,6 +20,7 @@ public:
 	int  start();
 	bool running;
 
+	DataPool _datapool;
 	
 	CL_Font *words;
 	CL_Point offset;

@@ -42,6 +42,7 @@ bool T_App::init()
 
 	mpComWindow = new CL_Window(&mGui, comWindowDesc);
 	mpComWindow->set_draggable(false);
+	mpComWindow->set_visible(false);
 
 	//initail events
 	mInput = mpDisplayWindow->get_ic();
@@ -52,6 +53,8 @@ bool T_App::init()
 
 	mpConsole = new CL_ConsoleWindow("Console", 80, 100);
 
+
+	_datapool.Initialize();
 	//LibDebugOnConsole();
 	
 

@@ -8,6 +8,9 @@ void T_App::loop()
 
 	time(&Btime);	
 
+	_datapool.update();
+	CL_Console::write_line("%1",_datapool.tempbody->GetPosition().y);
+
 	if (Btime-Atime>1/33)
 	{
 		double i=Btime-Atime;
