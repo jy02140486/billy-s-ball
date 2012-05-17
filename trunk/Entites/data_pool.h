@@ -24,5 +24,6 @@ public:
 
 	DataPool();
 	void update();
+	void drawbox(CL_GraphicContext *gc,b2Body *bodyref);
 };
 #endif
