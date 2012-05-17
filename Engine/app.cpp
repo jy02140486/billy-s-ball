@@ -76,7 +76,7 @@ void T_App::onKeyboardUp(const CL_InputEvent &key,
 {
 	if (key.id==CL_KEY_A)
 	{
-		_datapool.tempbox->SetAngularVelocity(90.0f);
+		_datapool.tempbox->SetAngularVelocity(1.0f);
 		CL_Console::write_line("%1",_datapool.tempbox->GetAngle());
 	}
 }
