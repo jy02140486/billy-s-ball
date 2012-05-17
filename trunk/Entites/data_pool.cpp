@@ -39,7 +39,7 @@ void DataPool::Initialize()
 	tempboxdef.SetAsBox(320,16);
 
 	bodyDef.position.Set(220,180);
-	bodyDef.type=b2_staticBody;
+	bodyDef.type=b2_kinematicBody;
 	tempbox=world->CreateBody(&bodyDef);
 	tempbox->CreateFixture(&tempboxdef,1);
 	
@@ -93,10 +93,10 @@ void DataPool::drawbox(CL_GraphicContext *gc,b2Body *bodyref)
 	vecs.set_attributes(0,positions);
 
 
-	if (bodyref->GetType()==b2_dynamicBody)
+//	if (bodyref->GetType()==b2_dynamicBody)
 		vecs.set_attributes(1,colors);
-	else
-		vecs.set_attributes(1,ground);
+// 	else
+// 		vecs.set_attributes(1,ground);
 
 	gc->set_program_object(cl_program_color_only);
 	gc->draw_primitives(cl_line_loop,vn,vecs);
