@@ -46,6 +46,7 @@ protected:
 	CL_Slot		slotWindowClose;
 //	CL_Slot slotWindowClose;
 	CL_Slot		slotKeyboardUp;
+	CL_Slot		slotKeyPressed;
 	CL_Slot		slotMouseMove;
 	CL_Slot		slotMouseDown;
 	CL_Slot	slotMouseUp;
