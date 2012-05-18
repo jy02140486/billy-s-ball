@@ -67,6 +67,7 @@ int T_App::eventInit()
 		&T_App::onMouseUp);
 	slotKeyboardUp=mKeyboard.sig_key_up().connect(this, 
 		&T_App::onKeyboardUp);
+	slotKeyPressed=mKeyboard.sig_key_down().connect(this,&T_App::onKeyboardDown);
 
 	return 0;
 }
@@ -74,10 +75,26 @@ int T_App::eventInit()
 void T_App::onKeyboardUp(const CL_InputEvent &key,
 						   const CL_InputState &state)
 {
-	if (key.id==CL_KEY_A)
-	{
-		_datapool.tempbox->SetAngularVelocity(1.0f);
-		CL_Console::write_line("%1",_datapool.tempbox->GetAngle());
-	}
+// 	if (key.id==CL_KEY_A)
+// 	{
+// 		_datapool.tempbox->SetAngularVelocity(1.0f);
+// 		CL_Console::write_line("%1",_datapool.tempbox->GetAngle());
+// 	}
 }
 
+void T_App::onKeyboardDown(const CL_InputEvent &key,
+						 const CL_InputState &state)
+{
+	//CL_Console::write_line("%1",_datapool.tempbox->GetAngle());
+	if (key.id==CL_KEY_A)
+	{
+		_datapool.tempbox->SetAngularVelocity(-0.1f);
+		/*CL_Console::write_line("%1",_datapool.tempbox->GetAngle());*/
+	}
+
+	if (key.id==CL_KEY_D)
+	{
+		_datapool.tempbox->SetAngularVelocity(0.1f);
+		/*CL_Console::write_line("%1",_datapool.tempbox->GetAngle());*/
+	}
+}

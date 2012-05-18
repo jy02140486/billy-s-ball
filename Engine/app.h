@@ -49,6 +49,7 @@ public:
 
 	//temp funcs
 	void LibDebugOnConsole();
+	void onKeyboardDown(const CL_InputEvent &key, const CL_InputState &state);
 };
 
 #endif
