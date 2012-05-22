@@ -10,9 +10,9 @@ void DataPool::Initialize()
 	b2Vec2 gravity(0.0f, 10.0f);
 	world=new b2World(gravity,true);
 
-	timeStep =24.0f;
-	velocityIterations = 10;
-	positionIterations = 6;
+	timeStep =6.0f;
+	velocityIterations = 20;
+	positionIterations = 15;
 
 
 	aabb.lowerBound.Set(-1.0f, -400.0f);
@@ -33,7 +33,7 @@ void DataPool::Initialize()
 	b2CircleShape tempball;
 	tempball.m_radius=20;
 
-	tempbody->CreateFixture(&tempball,1);
+	tempbody->CreateFixture(&tempball,10);
 
 	b2PolygonShape tempboxdef;
 	tempboxdef.SetAsBox(320,16);
