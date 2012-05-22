@@ -10,7 +10,7 @@ bool T_App::init()
 	//initail window description
 	mWinDesc.set_title("CellWarfare");
 	mWinDesc.set_allow_resize(true);
-	mWinDesc.set_size(CL_Size (960, 600), false);
+	mWinDesc.set_size(CL_Size (480, 848), false);
 
 	
 	CL_String resource("Res/GUITheme/resources.xml");

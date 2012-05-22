@@ -97,4 +97,9 @@ void T_App::onKeyboardDown(const CL_InputEvent &key,
 		_datapool.tempbox->SetAngularVelocity(0.1f);
 		/*CL_Console::write_line("%1",_datapool.tempbox->GetAngle());*/
 	}
+
+	if(key.id==CL_KEY_ESCAPE)
+	{
+		mQuit=1;
+	}
 }
