@@ -18,9 +18,6 @@ void DataPool::Initialize()
 	aabb.lowerBound.Set(-1.0f, -400.0f);
 	aabb.upperBound.Set(1.0f, 1.0f);
 
-	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(880.0f, 40.0f);
-
 	bodyDef.allowSleep=false;
 
 	worldAxis.Set(1.0f, 0.0f);
@@ -43,6 +40,15 @@ void DataPool::Initialize()
 	tempbox=world->CreateBody(&bodyDef);
 	tempbox->CreateFixture(&tempboxdef,1);
 	
+	bodyDef.position.Set(100,600);
+	bodyDef.type=b2_kinematicBody;
+
+	Billy=world->CreateBody(&bodyDef);
+	BillyImg=new CL_Image(*gc_ref,"res/withoutBall.png");
+	tempboxdef.SetAsBox(BillyImg->get_width(),BillyImg->get_height());	
+// 	b2PolygonShape billyPolygonShape;
+// 	billyPolygonShape.SetAsBox(200,30);
+	Billy->CreateFixture(&tempboxdef,1);
 }
 
 void DataPool::drawCircle( CL_GraphicContext *gc,b2Body *bodyref )
@@ -100,4 +106,10 @@ void DataPool::drawbox(CL_GraphicContext *gc,b2Body *bodyref)
 
 	gc->set_program_object(cl_program_color_only);
 	gc->draw_primitives(cl_line_loop,vn,vecs);
+}
+
+
+void DataPool::drawBilly(CL_GraphicContext *gc,b2Body *bodyref)
+{
+
 }
