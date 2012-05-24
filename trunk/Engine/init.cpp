@@ -53,7 +53,7 @@ bool T_App::init()
 
 	mpConsole = new CL_ConsoleWindow("Console", 80, 100);
 
-
+	_datapool.gc_ref=&mpDisplayWindow->get_gc();
 	_datapool.Initialize();
 	//LibDebugOnConsole();
 	

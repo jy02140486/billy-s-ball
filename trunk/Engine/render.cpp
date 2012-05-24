@@ -9,6 +9,7 @@ void T_App::render()
 
 	_datapool.drawCircle(&(mpDisplayWindow->get_gc()),_datapool.tempbody);
 	_datapool.drawbox(&(mpDisplayWindow->get_gc()),_datapool.tempbox);
+	_datapool.drawbox(&(mpDisplayWindow->get_gc()),_datapool.Billy);
 
 	mpWinManager->draw_windows(mpDisplayWindow->get_gc());
 		

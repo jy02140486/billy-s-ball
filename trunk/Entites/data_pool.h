@@ -7,11 +7,18 @@ class DataPool
 {
 
 public:
+	CL_GraphicContext *gc_ref;
+
 	b2Body *tempbody;
 	b2World *world;
 	b2BodyDef bodyDef;
 	b2Vec2 worldAxis;
 	b2AABB aabb;
+
+	//Billy's
+	b2Body *Billy;
+	CL_Image *BillyImg;
+	
 
 	float32 timeStep ;
 	int32 velocityIterations ;
@@ -25,5 +32,6 @@ public:
 	DataPool();
 	void update();
 	void drawbox(CL_GraphicContext *gc,b2Body *bodyref);
+	void drawBilly(CL_GraphicContext *gc,b2Body *bodyref);
 };
 #endif
