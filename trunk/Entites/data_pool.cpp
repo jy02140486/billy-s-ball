@@ -40,15 +40,17 @@ void DataPool::Initialize()
 	tempbox=world->CreateBody(&bodyDef);
 	tempbox->CreateFixture(&tempboxdef,1);
 	
-	bodyDef.position.Set(100,600);
+	bodyDef.position.Set(100,740);
 	bodyDef.type=b2_kinematicBody;
 
 	Billy=world->CreateBody(&bodyDef);
 	BillyImg=new CL_Image(*gc_ref,"res/withoutBall.png");
-	tempboxdef.SetAsBox(BillyImg->get_width(),BillyImg->get_height());	
-// 	b2PolygonShape billyPolygonShape;
-// 	billyPolygonShape.SetAsBox(200,30);
+	tempboxdef.SetAsBox(BillyImg->get_width()/2,BillyImg->get_height()/2);
+
 	Billy->CreateFixture(&tempboxdef,1);
+
+	b2Vec2 rightward(10,0);
+	Billy->SetLinearVelocity(rightward);
 }
 
 void DataPool::drawCircle( CL_GraphicContext *gc,b2Body *bodyref )
@@ -63,6 +65,12 @@ void DataPool::drawCircle( CL_GraphicContext *gc,b2Body *bodyref )
 void DataPool::update()
 {
 	world->Step(1.0f/ timeStep,velocityIterations,positionIterations);
+	
+	if (Billy->GetPosition().x+BillyImg->get_width()/2>640
+		||Billy->GetPosition().x-BillyImg->get_width()/2<0)
+	{
+		Billy->SetLinearVelocity(-Billy->GetLinearVelocity());
+	}
 }
 
 void DataPool::drawbox(CL_GraphicContext *gc,b2Body *bodyref)
@@ -111,5 +119,6 @@ void DataPool::drawbox(CL_GraphicContext *gc,b2Body *bodyref)
 
 void DataPool::drawBilly(CL_GraphicContext *gc,b2Body *bodyref)
 {
-
+	BillyImg->draw(*gc,bodyref->GetPosition().x-BillyImg->get_width()/2,bodyref->GetPosition().y-BillyImg->get_height()/2);
 }
+

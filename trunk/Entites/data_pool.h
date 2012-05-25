@@ -26,6 +26,8 @@ public:
 
 	b2Body *tempbox;
 
+
+
 	void Initialize();
 	void drawCircle(CL_GraphicContext *gc,b2Body *bodyref);
 
