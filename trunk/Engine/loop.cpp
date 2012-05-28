@@ -8,10 +8,10 @@ void T_App::loop()
 
 	time(&Btime);	
 
-	_datapool.update();
+	
 
 
-	if (Btime-Atime>1/33)
+	if (Btime-Atime>1/FPS)
 	{
 		double i=Btime-Atime;
 		time(&Atime);	
