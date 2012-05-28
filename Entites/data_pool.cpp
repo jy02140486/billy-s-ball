@@ -10,9 +10,9 @@ void DataPool::Initialize()
 	b2Vec2 gravity(0.0f, 10.0f);
 	world=new b2World(gravity,true);
 
-	timeStep =6.0f;
-	velocityIterations = 20;
-	positionIterations = 15;
+	timeStep =60;
+	velocityIterations = 6;
+	positionIterations = 2 ;
 
 
 	aabb.lowerBound.Set(-1.0f, -400.0f);
@@ -49,7 +49,7 @@ void DataPool::Initialize()
 
 	Billy->CreateFixture(&tempboxdef,1);
 
-	b2Vec2 rightward(10,0);
+	b2Vec2 rightward(40,0);
 	Billy->SetLinearVelocity(rightward);
 }
 

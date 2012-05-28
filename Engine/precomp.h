@@ -23,3 +23,4 @@
 
 #include "Box2D/Box2D.h"
 
+#define FPS 44

@@ -3,7 +3,7 @@
 #include "../Libs/Converter.h"
 #include <time.h>
 
-#define FPS 44
+
 
 T_App::T_App()
 {
@@ -33,6 +33,7 @@ int T_App::start()
 			mrk=GetTickCount();
 		}
 		else Sleep(1000.0/fps-(GetTickCount()-mrk));
+		_datapool.update();
 	}
 
 	return 0;
