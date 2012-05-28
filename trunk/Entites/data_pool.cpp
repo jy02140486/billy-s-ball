@@ -1,5 +1,6 @@
 #include "data_pool.h"
 
+
 DataPool::DataPool()
 {
 
@@ -31,9 +32,10 @@ void DataPool::Initialize()
 	tempball.m_radius=20;
 
 	tempbody->CreateFixture(&tempball,10);
+	tempbody->SetUserData(this);
 
 	b2PolygonShape tempboxdef;
-	tempboxdef.SetAsBox(320,16);
+	tempboxdef.SetAsBox(100,10);
 
 	bodyDef.position.Set(220,180);
 	bodyDef.type=b2_kinematicBody;
@@ -51,6 +53,8 @@ void DataPool::Initialize()
 
 	b2Vec2 rightward(40,0);
 	Billy->SetLinearVelocity(rightward);
+
+	world->SetContactListener(new ContactListener());
 }
 
 void DataPool::drawCircle( CL_GraphicContext *gc,b2Body *bodyref )
