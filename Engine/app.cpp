@@ -44,8 +44,6 @@ void T_App::onMouseUp(const CL_InputEvent &, const CL_InputState &)
 	
 }
 
-
-
 void T_App::onMouseDown(const CL_InputEvent &, const CL_InputState &)
 {
 	

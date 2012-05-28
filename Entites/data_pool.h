@@ -2,31 +2,34 @@
 #define DATA_POOL_H
 
 #include "../Engine/precomp.h"
+#include "ContactListener.h"
 
 class DataPool
 {
 
 public:
-	CL_GraphicContext *gc_ref;
-
-	b2Body *tempbody;
+	
+	//b2worlds'
+	float32 timeStep ;
+	int32 velocityIterations ;
+	int32 positionIterations ;
 	b2World *world;
-	b2BodyDef bodyDef;
 	b2Vec2 worldAxis;
 	b2AABB aabb;
+
+	//CLs'
+	CL_GraphicContext *gc_ref;
+
+	//Logics'
+	b2Body *tempbox;
+	b2Body *tempbody;
+	b2BodyDef bodyDef;
+
+	b2Body *curbody;
 
 	//Billy's
 	b2Body *Billy;
 	CL_Image *BillyImg;
-	
-
-	float32 timeStep ;
-	int32 velocityIterations ;
-	int32 positionIterations ;
-
-	b2Body *tempbox;
-
-
 
 	void Initialize();
 	void drawCircle(CL_GraphicContext *gc,b2Body *bodyref);
