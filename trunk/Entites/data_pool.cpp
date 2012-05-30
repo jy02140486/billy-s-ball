@@ -11,8 +11,8 @@ void DataPool::Initialize()
 	b2Vec2 gravity(0.0f, 10.0f);
 	world=new b2World(gravity,true);
 
-	timeStep =60;
-	velocityIterations = 6;
+	timeStep =44;
+	velocityIterations = 4;
 	positionIterations = 2 ;
 
 
@@ -42,7 +42,7 @@ void DataPool::Initialize()
 	tempbox=world->CreateBody(&bodyDef);
 	tempbox->CreateFixture(&tempboxdef,1);
 	
-	bodyDef.position.Set(100,740);
+	bodyDef.position.Set(100,440);
 	bodyDef.type=b2_kinematicBody;
 
 	Billy=world->CreateBody(&bodyDef);
@@ -53,6 +53,8 @@ void DataPool::Initialize()
 
 	b2Vec2 rightward(40,0);
 	Billy->SetLinearVelocity(rightward);
+	int *i=new int(1);
+	Billy->SetUserData(i);
 
 	world->SetContactListener(new ContactListener());
 }
