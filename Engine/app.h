@@ -30,6 +30,10 @@ public:
 	CL_Signal_v1<GLOBAL_STATE> sig_state;
 	CL_Slot slot_stateChanged;
 
+
+	CL_Signal_v1<int> sig_test;
+	CL_Slot slot_intChanged;
+
 	time_t Atime;
 	DWORD mrk;
 
@@ -58,6 +62,7 @@ public:
 	void OnStateChange(GLOBAL_STATE state);
 	void Finish();
 	void EndAll();
+	void OnIntChanged(int v);
 };
 
 #endif

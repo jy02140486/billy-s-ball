@@ -58,7 +58,6 @@ bool T_App::init()
 	//LibDebugOnConsole();
 
 	slot_stateChanged=sig_state.connect(this,&T_App::OnStateChange);
-	/*sig_state*/
 
 	time(&Atime);
 	}
@@ -81,3 +80,4 @@ bool T_App::init()
 // 		&T_App::onMouseDown);
 	return true;
 }
+

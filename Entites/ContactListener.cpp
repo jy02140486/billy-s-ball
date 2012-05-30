@@ -38,5 +38,4 @@ void ContactListener::EndContact(b2Contact* contact)
 void ContactListener::setVic(b2Contact* contact)
 {
 	global_state=ALL_CLEAR;
-//	sig_state(global_state);
 }
