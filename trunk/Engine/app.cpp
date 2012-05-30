@@ -35,6 +35,10 @@ int T_App::start()
 		}
 		else Sleep(1000.0/fps-(GetTickCount()-mrk));
 		_datapool.update();
+		if (global_state==ALL_CLEAR)
+		{
+			sig_state.invoke(ALL_CLEAR);
+		}
 	}
 
 	return 0;
@@ -131,3 +135,4 @@ void T_App::EndAll()
 {
 	mQuit=true;
 }
+

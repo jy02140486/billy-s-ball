@@ -13,7 +13,6 @@ public:
 	void setVic(b2Contact* contact);
 	void Finish();
 
-	CL_Signal_v1 <GLOBAL_STATE> sig_state;
 };
 
 #endif
