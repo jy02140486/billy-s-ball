@@ -1,5 +1,4 @@
 #include "ContactListener.h"
-#include <ClanLib/core.h>
 
 
 void ContactListener::BeginContact(b2Contact* contact)
@@ -15,7 +14,7 @@ void ContactListener::BeginContact(b2Contact* contact)
 	int *i=(int*)tb->GetUserData();
 	if (*i==1)
 	{
-		CL_Console::write_line("win");
+		setVic(contact);
 	}
 
 	tb=contact->GetFixtureB()->GetBody();
@@ -26,7 +25,7 @@ void ContactListener::BeginContact(b2Contact* contact)
 	i=(int*)tb->GetUserData();
 	if (*i==1)
 	{
-		CL_Console::write_line("win");
+		setVic(contact);
 	}
 	
 }
@@ -34,4 +33,10 @@ void ContactListener::BeginContact(b2Contact* contact)
 void ContactListener::EndContact(b2Contact* contact)
 {
 	CL_Console::write_line("Disengage!");
+}
+
+void ContactListener::setVic(b2Contact* contact)
+{
+	global_state=ALL_CLEAR;
+//	sig_state(global_state);
 }

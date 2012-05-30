@@ -20,10 +20,15 @@ public:
 	int  start();
 	bool running;
 
+	//entites
 	DataPool _datapool;
 	
 	CL_Font *words;
 	CL_Point offset;
+
+	
+	CL_Signal_v1<GLOBAL_STATE> sig_state;
+	CL_Slot slot_stateChanged;
 
 	time_t Atime;
 	DWORD mrk;
@@ -50,6 +55,9 @@ public:
 	//temp funcs
 	void LibDebugOnConsole();
 	void onKeyboardDown(const CL_InputEvent &key, const CL_InputState &state);
+	void OnStateChange(GLOBAL_STATE state);
+	void Finish();
+	void EndAll();
 };
 
 #endif
