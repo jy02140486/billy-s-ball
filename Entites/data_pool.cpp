@@ -1,5 +1,5 @@
 #include "data_pool.h"
-
+#include "../Engine/globals.h"
 
 DataPool::DataPool()
 {
@@ -57,6 +57,8 @@ void DataPool::Initialize()
 	Billy->SetUserData(i);
 
 	world->SetContactListener(new ContactListener());
+
+	AllClear=new CL_Image(*gc_ref,"res/back.png");
 }
 
 void DataPool::drawCircle( CL_GraphicContext *gc,b2Body *bodyref )
@@ -70,13 +72,21 @@ void DataPool::drawCircle( CL_GraphicContext *gc,b2Body *bodyref )
 
 void DataPool::update()
 {
-	world->Step(1.0f/ timeStep,velocityIterations,positionIterations);
-	
-	if (Billy->GetPosition().x+BillyImg->get_width()/2>640
-		||Billy->GetPosition().x-BillyImg->get_width()/2<0)
+	switch(global_state)
 	{
-		Billy->SetLinearVelocity(-Billy->GetLinearVelocity());
+	case COMMON:
+		world->Step(1.0f/ timeStep,velocityIterations,positionIterations);
+
+		if (Billy->GetPosition().x+BillyImg->get_width()/2>640
+			||Billy->GetPosition().x-BillyImg->get_width()/2<0)
+		{
+			Billy->SetLinearVelocity(-Billy->GetLinearVelocity());
+		}
+		break;
+	case ALL_CLEAR:
+		break;
 	}
+	
 }
 
 void DataPool::drawbox(CL_GraphicContext *gc,b2Body *bodyref)

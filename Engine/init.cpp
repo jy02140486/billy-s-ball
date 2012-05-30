@@ -8,7 +8,7 @@ bool T_App::init()
 	{
 	
 	//initail window description
-	mWinDesc.set_title("CellWarfare");
+	mWinDesc.set_title("Billy's Ball");
 	mWinDesc.set_allow_resize(true);
 	mWinDesc.set_size(CL_Size (640, 848), false);
 
@@ -56,7 +56,9 @@ bool T_App::init()
 	_datapool.gc_ref=&mpDisplayWindow->get_gc();
 	_datapool.Initialize();
 	//LibDebugOnConsole();
-	
+
+	slot_stateChanged=sig_state.connect(this,&T_App::OnStateChange);
+	/*sig_state*/
 
 	time(&Atime);
 	}

@@ -1,6 +1,7 @@
 #ifndef MAIN_H
 #define MAIN_H 
 #include "precomp.h"
+#include "globals.h"
 
 class T_Main 
 {

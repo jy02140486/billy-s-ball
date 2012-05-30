@@ -30,6 +30,7 @@ public:
 	//Billy's
 	b2Body *Billy;
 	CL_Image *BillyImg;
+	CL_Image* AllClear;
 
 	void Initialize();
 	void drawCircle(CL_GraphicContext *gc,b2Body *bodyref);

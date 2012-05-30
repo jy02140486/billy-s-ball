@@ -2,6 +2,7 @@
 #include "../libs/querryback.h"
 #include "../Libs/Converter.h"
 #include <time.h>
+#include "../Libs/timer.h"
 
 
 
@@ -19,7 +20,7 @@ int T_App::start()
 		return -1;
 	}
 
-	global_state=STRATGY;
+	global_state=COMMON;
 
 	int fps=FPS;
 	mrk=GetTickCount();
@@ -77,34 +78,56 @@ void T_App::onKeyboardUp(const CL_InputEvent &key,
 	if (key.id==CL_KEY_A)
 	{
 		_datapool.tempbox->SetAngularVelocity(0);
-		/*CL_Console::write_line("%1",_datapool.tempbox->GetAngle());*/
 	}
 
 	if (key.id==CL_KEY_D)
 	{
 		_datapool.tempbox->SetAngularVelocity(0);
-		/*CL_Console::write_line("%1",_datapool.tempbox->GetAngle());*/
 	}
 }
 
 void T_App::onKeyboardDown(const CL_InputEvent &key,
 						 const CL_InputState &state)
 {
-	//CL_Console::write_line("%1",_datapool.tempbox->GetAngle());
-	if (key.id==CL_KEY_A)
-	{
-		_datapool.tempbox->SetAngularVelocity(-0.2f);
-		/*CL_Console::write_line("%1",_datapool.tempbox->GetAngle());*/
-	}
-
-	if (key.id==CL_KEY_D)
-	{
-		_datapool.tempbox->SetAngularVelocity(0.2f);
-		/*CL_Console::write_line("%1",_datapool.tempbox->GetAngle());*/
-	}
-
 	if(key.id==CL_KEY_ESCAPE)
 	{
-		mQuit=1;
+		EndAll();
 	}
+
+	switch(global_state)
+	{
+	case COMMON:
+		if (key.id==CL_KEY_A)
+		{
+			_datapool.tempbox->SetAngularVelocity(-0.2f);
+		}
+
+		if (key.id==CL_KEY_D)
+		{
+			_datapool.tempbox->SetAngularVelocity(0.2f);
+		}
+		break;
+	}
+}
+
+void T_App::OnStateChange(GLOBAL_STATE state)
+{
+	switch(state)
+	{
+	case ALL_CLEAR:
+		Finish();
+		break;
+	}
+}
+
+void T_App::Finish()
+{
+	Timer *timer=new Timer();
+	timer->init(4,false);
+	timer->func_expired().set(this,&T_App::EndAll);
+}
+
+void T_App::EndAll()
+{
+	mQuit=true;
 }
