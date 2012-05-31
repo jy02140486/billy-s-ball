@@ -79,20 +79,26 @@ int T_App::eventInit()
 void T_App::onKeyboardUp(const CL_InputEvent &key,
 						   const CL_InputState &state)
 {
+	b2Vec2 temp;
 	if (key.id==CL_KEY_A)
 	{
 		_datapool.tempbox->SetAngularVelocity(0);
+		temp.Set(0,0);
+		_datapool.kPlatform->SetLinearVelocity(temp);
 	}
 
 	if (key.id==CL_KEY_D)
 	{
 		_datapool.tempbox->SetAngularVelocity(0);
+		temp.Set(0,0);
+		_datapool.kPlatform->SetLinearVelocity(temp);
 	}
 }
 
 void T_App::onKeyboardDown(const CL_InputEvent &key,
 						 const CL_InputState &state)
 {
+	b2Vec2 temp;
 	if(key.id==CL_KEY_ESCAPE)
 	{
 		EndAll();
@@ -109,11 +115,15 @@ void T_App::onKeyboardDown(const CL_InputEvent &key,
 		if (key.id==CL_KEY_A)
 		{
 			_datapool.tempbox->SetAngularVelocity(-0.2f);
+			temp.Set(-40,0);
+			_datapool.kPlatform->SetLinearVelocity(temp);
 		}
 
 		if (key.id==CL_KEY_D)
 		{
 			_datapool.tempbox->SetAngularVelocity(0.2f);
+			temp.Set(40,0);
+			_datapool.kPlatform->SetLinearVelocity(temp);
 		}
 		break;
 	}
