@@ -39,5 +39,6 @@ public:
 	void update();
 	void drawbox(CL_GraphicContext *gc,b2Body *bodyref);
 	void drawBilly(CL_GraphicContext *gc,b2Body *bodyref);
+	void Reset();
 };
 #endif
