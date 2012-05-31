@@ -42,7 +42,7 @@ void DataPool::Initialize()
 	tempbox=world->CreateBody(&bodyDef);
 	tempbox->CreateFixture(&tempboxdef,1);
 	
-	bodyDef.position.Set(100,440);
+	bodyDef.position.Set(100,740);
 	bodyDef.type=b2_kinematicBody;
 
 	Billy=world->CreateBody(&bodyDef);
@@ -59,6 +59,13 @@ void DataPool::Initialize()
 	world->SetContactListener(new ContactListener());
 
 	AllClear=new CL_Image(*gc_ref,"res/back.png");
+
+
+	kPlatformDef.position.Set(50,500);
+	kPlatformDef.type=b2_kinematicBody;
+	kPlatform=world->CreateBody(&kPlatformDef);
+	kPlatformShape.SetAsBox(40,5);
+	kPlatform->CreateFixture(&kPlatformShape,50);
 }
 
 void DataPool::drawCircle( CL_GraphicContext *gc,b2Body *bodyref )
@@ -81,6 +88,12 @@ void DataPool::update()
 			||Billy->GetPosition().x-BillyImg->get_width()/2<0)
 		{
 			Billy->SetLinearVelocity(-Billy->GetLinearVelocity());
+		}
+
+		if (kPlatform->GetPosition().x<0||kPlatform->GetPosition().x>600)
+		{
+			b2Vec2 tempVec(0,0);
+			kPlatform->SetLinearVelocity(tempVec);
 		}
 		break;
 	case ALL_CLEAR:
@@ -157,4 +170,14 @@ void DataPool::Reset()
 	tempbody->CreateFixture(&tempball,10);
 	tempbody->SetUserData(this);
 
+	//reset the kPlatform
+	if (kPlatform!=NULL)
+	{
+		world->DestroyBody(kPlatform);
+	}
+	kPlatformDef.position.Set(50,500);
+	kPlatformDef.type=b2_kinematicBody;
+	kPlatform=world->CreateBody(&kPlatformDef);
+	kPlatformShape.SetAsBox(40,5);
+	kPlatform->CreateFixture(&kPlatformShape,50);
 }

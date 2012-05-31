@@ -58,6 +58,8 @@ bool T_App::init()
 	//LibDebugOnConsole();
 
 	slot_stateChanged=sig_state.connect(this,&T_App::OnStateChange);
+	words=new CL_Font(mpDisplayWindow->get_gc(),"Tahoma",30);
+
 
 	time(&Atime);
 	}

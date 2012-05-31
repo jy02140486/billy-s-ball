@@ -32,6 +32,12 @@ public:
 	CL_Image *BillyImg;
 	CL_Image* AllClear;
 
+	//kinematic platform
+	b2BodyDef kPlatformDef;
+	b2Body* kPlatform;
+	b2PolygonShape kPlatformShape;
+	
+
 	void Initialize();
 	void drawCircle(CL_GraphicContext *gc,b2Body *bodyref);
 
