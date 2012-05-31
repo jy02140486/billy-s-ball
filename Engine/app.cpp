@@ -98,6 +98,11 @@ void T_App::onKeyboardDown(const CL_InputEvent &key,
 		EndAll();
 	}
 
+	if(key.id==CL_KEY_SPACE)
+	{
+		_datapool.Reset();
+	}
+
 	switch(global_state)
 	{
 	case COMMON:

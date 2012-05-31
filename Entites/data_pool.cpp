@@ -138,3 +138,23 @@ void DataPool::drawBilly(CL_GraphicContext *gc,b2Body *bodyref)
 	BillyImg->draw(*gc,bodyref->GetPosition().x-BillyImg->get_width()/2,bodyref->GetPosition().y-BillyImg->get_height()/2);
 }
 
+void DataPool::Reset()
+{
+	global_state=COMMON;
+	if (tempbody!=NULL)
+	{
+		world->DestroyBody(tempbody);
+	}
+	//reset the ball
+	bodyDef.type=b2_dynamicBody;
+	bodyDef.position.Set(180.0f,40.0f);
+
+	tempbody=world->CreateBody(&bodyDef);
+
+	b2CircleShape tempball;
+	tempball.m_radius=20;
+
+	tempbody->CreateFixture(&tempball,10);
+	tempbody->SetUserData(this);
+
+}
