@@ -16,6 +16,7 @@ void T_App::render()
 		_datapool.drawbox(&(mpDisplayWindow->get_gc()),_datapool.tempbox);
 		_datapool.drawbox(&(mpDisplayWindow->get_gc()),_datapool.Billy);
 		_datapool.drawbox(&(mpDisplayWindow->get_gc()),_datapool.kPlatform);
+		_datapool.drawbox(&(mpDisplayWindow->get_gc()),_datapool.catapult);
 		_datapool.drawBilly(&(mpDisplayWindow->get_gc()),_datapool.Billy);
 		break;
 	case ALL_CLEAR:

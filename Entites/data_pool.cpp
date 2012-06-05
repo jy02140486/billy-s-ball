@@ -1,6 +1,8 @@
 #include "data_pool.h"
 #include "../Engine/globals.h"
 
+#define M_PI       3.14159265358979323846
+
 DataPool::DataPool()
 {
 
@@ -61,11 +63,28 @@ void DataPool::Initialize()
 	AllClear=new CL_Image(*gc_ref,"res/back.png");
 
 
-	kPlatformDef.position.Set(50,500);
+	//kinematic plaform
+	kPlatformDef.position.Set(50,400);
 	kPlatformDef.type=b2_kinematicBody;
 	kPlatform=world->CreateBody(&kPlatformDef);
 	kPlatformShape.SetAsBox(40,5);
 	kPlatform->CreateFixture(&kPlatformShape,50);
+
+	//bullet
+	bulletshape.m_radius=0.25f;
+	bulletfixturedef.shape=&bulletshape;
+	bulletfixturedef.density=10;
+	bulletfixturedef.restitution=0.2f;
+	bulletbodydef.type=b2_dynamicBody;
+	bulletbodydef.bullet=true;
+
+	//catapult
+	catapultbodydef.position.Set(540,540);
+	catapultbodydef.type=b2_kinematicBody;
+	catapult=world->CreateBody(&catapultbodydef);
+	setConvexVertex(&catapultshape,3,20);
+	catapult->CreateFixture(&catapultshape,50);
+	catapult->SetAngularVelocity(0.5f);
 }
 
 void DataPool::drawCircle( CL_GraphicContext *gc,b2Body *bodyref )
@@ -175,9 +194,37 @@ void DataPool::Reset()
 	{
 		world->DestroyBody(kPlatform);
 	}
-	kPlatformDef.position.Set(50,500);
+	kPlatformDef.position.Set(50,400);
 	kPlatformDef.type=b2_kinematicBody;
 	kPlatform=world->CreateBody(&kPlatformDef);
 	kPlatformShape.SetAsBox(40,5);
 	kPlatform->CreateFixture(&kPlatformShape,50);
 }
+
+
+
+//set vertexes Attributes
+void DataPool::setConvexVertex(b2PolygonShape *shapeDef,int n,float32 radius) 
+
+{  
+	shapeDef->m_vertexCount = n;  
+
+	float32 Pi=M_PI;
+
+	float32 angle=Pi * 2 / n;  
+
+	float32 dx,dy;
+
+	for (int i= 0; i < n;i++ )  
+	{  
+		dx = radius * cos(angle * i-angle/2);  
+		dy = radius *sin(angle * i-angle/2);  
+		shapeDef->m_vertices[i].Set(dx,dy);  
+
+		CL_Console::write_line("v%1 x=%2 y=%3",i,dx,dy);
+	}  
+
+
+	shapeDef->Set(shapeDef->m_vertices,n);
+	//  shapeDef->m_radius=radius;
+}  
