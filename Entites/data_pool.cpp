@@ -173,15 +173,30 @@ void DataPool::drawBilly(CL_GraphicContext *gc,b2Body *bodyref)
 void DataPool::Reset()
 {
 	global_state=COMMON;
+	
 	if (tempbody!=NULL)
 	{
 		world->DestroyBody(tempbody);
 	}
+
+	if (tempbox!=NULL)
+	{
+		world->DestroyBody(tempbox);
+	}
+
 	//reset the ball
 	bodyDef.type=b2_dynamicBody;
 	bodyDef.position.Set(180.0f,40.0f);
-
 	tempbody=world->CreateBody(&bodyDef);
+
+	//reset the turning box
+	b2PolygonShape tempboxdef;
+	tempboxdef.SetAsBox(100,10);
+
+	bodyDef.position.Set(220,180);
+	bodyDef.type=b2_kinematicBody;
+	tempbox=world->CreateBody(&bodyDef);
+	tempbox->CreateFixture(&tempboxdef,1);
 
 	b2CircleShape tempball;
 	tempball.m_radius=20;
