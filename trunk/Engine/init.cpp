@@ -9,7 +9,8 @@ bool T_App::init()
 	
 	//initail window description
 	mWinDesc.set_title("Billy's Ball");
-	mWinDesc.set_allow_resize(true);
+	mWinDesc.set_allow_resize(false);
+	mWinDesc.show_maximize_button(false);
 	mWinDesc.set_size(CL_Size (640, 848), false);
 
 	
