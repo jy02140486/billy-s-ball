@@ -7,8 +7,13 @@ DataPool::DataPool()
 {
 
 }
-void DataPool::Initialize()
+void DataPool::Initialize(CL_GraphicContext*gc,int screen_high)
 {
+
+	gc_ref=gc;
+	screenH=screen_high;
+
+	const float32 scrhref=screenH;
 
 	b2Vec2 gravity(0.0f, 10.0f);
 	world=new b2World(gravity,true);
@@ -26,7 +31,7 @@ void DataPool::Initialize()
 	worldAxis.Set(1.0f, 0.0f);
 
 	bodyDef.type=b2_dynamicBody;
-	bodyDef.position.Set(180.0f,40.0f);
+	bodyDef.position.Set(180.0f,0);
 
 	tempbody=world->CreateBody(&bodyDef);
 
@@ -42,17 +47,20 @@ void DataPool::Initialize()
 	p2.Set(60,0);
 	tempboxdef.SetAsEdge(p1,p2);
 
-	bodyDef.position.Set(220,180);
+	bodyDef.position.Set(220,(float32)scrhref/5);
 	bodyDef.type=b2_kinematicBody;
 	tempbox=world->CreateBody(&bodyDef);
-	tempbox->CreateFixture(&tempboxdef,1);
+	b2Fixture *fixture=tempbox->CreateFixture(&tempboxdef,1);
+	fixture->SetFriction(0.5f);
+	fixture->SetRestitution(0.2f);
 	
-	bodyDef.position.Set(100,740);
+	BillyImg=new CL_Image(*gc_ref,"res/withoutBall.png");
+	tempboxdef.SetAsBox(BillyImg->get_width()/2,BillyImg->get_height()/2);
+	bodyDef.position.Set(100,scrhref-BillyImg->get_height());
 	bodyDef.type=b2_kinematicBody;
 
 	Billy=world->CreateBody(&bodyDef);
-	BillyImg=new CL_Image(*gc_ref,"res/withoutBall.png");
-	tempboxdef.SetAsBox(BillyImg->get_width()/2,BillyImg->get_height()/2);
+
 
 	Billy->CreateFixture(&tempboxdef,1);
 
@@ -67,11 +75,14 @@ void DataPool::Initialize()
 
 
 	//kinematic plaform
-	kPlatformDef.position.Set(50,400);
+	kPlatformDef.position.Set(50.0f,(float32)((2*scrhref)/5));
 	kPlatformDef.type=b2_kinematicBody;
 	kPlatform=world->CreateBody(&kPlatformDef);
 	kPlatformShape.SetAsBox(80,5);
-	kPlatform->CreateFixture(&kPlatformShape,50);
+	b2Fixture * kpf=kPlatform->CreateFixture(&kPlatformShape,50);
+	kpf->SetRestitution(0.5f);
+	kpf->SetFriction(0.4f);
+	
 
 	//bullet
 	bulletshape.m_radius=0.25f;
@@ -88,7 +99,7 @@ void DataPool::Initialize()
 
 
 	//catapult
-	catapultbodydef.position.Set(340,540);
+	catapultbodydef.position.Set(340,2*scrhref/3);
 	catapultbodydef.type=b2_kinematicBody;
 	catapult=world->CreateBody(&catapultbodydef);
 	setConvexVertex(&catapultshape,3,40);
@@ -182,6 +193,8 @@ void DataPool::drawBilly(CL_GraphicContext *gc,b2Body *bodyref)
 void DataPool::Reset()
 {
 	global_state=COMMON;
+
+	const float32 scrhref=screenH;
 	
 	if (tempbody!=NULL)
 	{
@@ -195,17 +208,24 @@ void DataPool::Reset()
 
 	//reset the ball
 	bodyDef.type=b2_dynamicBody;
-	bodyDef.position.Set(180.0f,40.0f);
+
+
+	bodyDef.position.Set(220,(float32)scrhref/5);
 	tempbody=world->CreateBody(&bodyDef);
 
 	//reset the turning box
 	b2PolygonShape tempboxdef;
-	tempboxdef.SetAsBox(100,10);
+	b2Vec2 p1,p2;
+	p1.Set(-60,0);
+	p2.Set(60,0);
+	tempboxdef.SetAsEdge(p1,p2);
 
 	bodyDef.position.Set(220,180);
 	bodyDef.type=b2_kinematicBody;
 	tempbox=world->CreateBody(&bodyDef);
-	tempbox->CreateFixture(&tempboxdef,1);
+	b2Fixture *fixture=tempbox->CreateFixture(&tempboxdef,1);
+	fixture->SetFriction(0.5f);
+	fixture->SetRestitution(0.2f);
 
 	b2CircleShape tempball;
 	tempball.m_radius=20;
@@ -218,11 +238,13 @@ void DataPool::Reset()
 	{
 		world->DestroyBody(kPlatform);
 	}
-	kPlatformDef.position.Set(50,400);
+	kPlatformDef.position.Set(50.0f,(float32)((2*scrhref)/5));
 	kPlatformDef.type=b2_kinematicBody;
 	kPlatform=world->CreateBody(&kPlatformDef);
-	kPlatformShape.SetAsBox(40,5);
-	kPlatform->CreateFixture(&kPlatformShape,50);
+	kPlatformShape.SetAsBox(80,5);
+	b2Fixture * kpf=kPlatform->CreateFixture(&kPlatformShape,50);
+	kpf->SetRestitution(0.5f);
+	kpf->SetFriction(0.4f);
 }
 
 
@@ -280,8 +302,6 @@ void DataPool::drawall()
 	{
 		if (itr->GetFixtureList()->GetShape()->GetType()==bulletshape.e_circle)
 		{
-			if(itr->IsBullet())
-				CL_Console::write_line("Bullet");
 			drawCircle(gc_ref,itr);
 		}
 		else if(itr->GetFixtureList()->GetShape()->GetType()==bulletshape.e_polygon)
