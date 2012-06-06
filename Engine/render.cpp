@@ -12,11 +12,12 @@ void T_App::render()
 	switch (global_state)
 	{
 	case COMMON:
-		_datapool.drawCircle(&(mpDisplayWindow->get_gc()),_datapool.tempbody);
-		_datapool.drawbox(&(mpDisplayWindow->get_gc()),_datapool.tempbox);
-		_datapool.drawbox(&(mpDisplayWindow->get_gc()),_datapool.Billy);
-		_datapool.drawbox(&(mpDisplayWindow->get_gc()),_datapool.kPlatform);
-		_datapool.drawbox(&(mpDisplayWindow->get_gc()),_datapool.catapult);
+// 		_datapool.drawCircle(&(mpDisplayWindow->get_gc()),_datapool.tempbody);
+// 		_datapool.drawbox(&(mpDisplayWindow->get_gc()),_datapool.tempbox);
+// 		_datapool.drawbox(&(mpDisplayWindow->get_gc()),_datapool.Billy);
+// 		_datapool.drawbox(&(mpDisplayWindow->get_gc()),_datapool.kPlatform);
+// 		_datapool.drawbox(&(mpDisplayWindow->get_gc()),_datapool.catapult);
+		_datapool.drawall();
 		_datapool.drawBilly(&(mpDisplayWindow->get_gc()),_datapool.Billy);
 		break;
 	case ALL_CLEAR:

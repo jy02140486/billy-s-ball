@@ -3,6 +3,7 @@
 
 #include "../Engine/precomp.h"
 #include "ContactListener.h"
+#include "../Libs/timer.h"
 
 class DataPool
 {
@@ -41,6 +42,7 @@ public:
 	b2CircleShape	bulletshape;
 	b2BodyDef		bulletbodydef;
 	b2FixtureDef	bulletfixturedef;
+	Timer *			bullettimer;
 	
 	//Catapult
 	b2PolygonShape	catapultshape;
@@ -56,5 +58,7 @@ public:
 	void drawBilly(CL_GraphicContext *gc,b2Body *bodyref);
 	void Reset();
 	void setConvexVertex(b2PolygonShape *shapeDef,int n,float32 radius);
+	void OnBulletTimeUp();
+	void drawall();
 };
 #endif

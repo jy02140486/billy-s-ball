@@ -37,7 +37,10 @@ void DataPool::Initialize()
 	tempbody->SetUserData(this);
 
 	b2PolygonShape tempboxdef;
-	tempboxdef.SetAsBox(100,10);
+	b2Vec2 p1,p2;
+	p1.Set(-60,0);
+	p2.Set(60,0);
+	tempboxdef.SetAsEdge(p1,p2);
 
 	bodyDef.position.Set(220,180);
 	bodyDef.type=b2_kinematicBody;
@@ -75,11 +78,17 @@ void DataPool::Initialize()
 	bulletfixturedef.shape=&bulletshape;
 	bulletfixturedef.density=10;
 	bulletfixturedef.restitution=0.2f;
-	bulletbodydef.type=b2_dynamicBody;
+	bulletbodydef.type=b2_kinematicBody;
 	bulletbodydef.bullet=true;
 
+	bullettimer=new Timer();
+	bullettimer->init(4,true);
+	bullettimer->func_expired().set(this,&DataPool::OnBulletTimeUp);
+	bullettimer->begin(true);
+
+
 	//catapult
-	catapultbodydef.position.Set(540,540);
+	catapultbodydef.position.Set(340,540);
 	catapultbodydef.type=b2_kinematicBody;
 	catapult=world->CreateBody(&catapultbodydef);
 	setConvexVertex(&catapultshape,3,20);
@@ -243,3 +252,41 @@ void DataPool::setConvexVertex(b2PolygonShape *shapeDef,int n,float32 radius)
 	shapeDef->Set(shapeDef->m_vertices,n);
 	//  shapeDef->m_radius=radius;
 }  
+
+void DataPool::OnBulletTimeUp()
+{
+	CL_Console::write_line("In!");
+	b2PolygonShape* shape=(b2PolygonShape*)catapult->GetFixtureList()->GetShape();
+	b2Body *tempbody;
+	b2Transform tmptf;
+	b2Vec2 tmpvec;
+
+	for(int i=0;i<3;i++)
+	{
+		tmptf=catapult->GetTransform();
+		tmpvec=b2Mul(tmptf,catapultshape.GetVertex(i));
+
+//		bulletbodydef.position.Set(shape->GetVertex(i).x+catapult->GetPosition().x,shape->GetVertex(i).y+catapult->GetPosition().y);
+		bulletbodydef.position.Set(tmpvec.x,tmpvec.y);
+		tempbody=world->CreateBody(&bulletbodydef);
+		tempbody->SetLinearVelocity(tmpvec-catapult->GetPosition());
+		tempbody->CreateFixture(&bulletfixturedef);
+	}
+}
+
+void DataPool::drawall()
+{
+	for (b2Body* itr=world->GetBodyList();itr!=NULL;itr=itr->GetNext())
+	{
+		if (itr->GetFixtureList()->GetShape()->GetType()==bulletshape.e_circle)
+		{
+			if(itr->IsBullet())
+				CL_Console::write_line("Bullet");
+			drawCircle(gc_ref,itr);
+		}
+		else if(itr->GetFixtureList()->GetShape()->GetType()==bulletshape.e_polygon)
+		{
+			drawbox(gc_ref,itr);
+		}
+	}
+}
