@@ -70,7 +70,7 @@ void DataPool::Initialize()
 	kPlatformDef.position.Set(50,400);
 	kPlatformDef.type=b2_kinematicBody;
 	kPlatform=world->CreateBody(&kPlatformDef);
-	kPlatformShape.SetAsBox(40,5);
+	kPlatformShape.SetAsBox(80,5);
 	kPlatform->CreateFixture(&kPlatformShape,50);
 
 	//bullet
@@ -91,7 +91,7 @@ void DataPool::Initialize()
 	catapultbodydef.position.Set(340,540);
 	catapultbodydef.type=b2_kinematicBody;
 	catapult=world->CreateBody(&catapultbodydef);
-	setConvexVertex(&catapultshape,3,20);
+	setConvexVertex(&catapultshape,3,40);
 	catapult->CreateFixture(&catapultshape,50);
 	catapult->SetAngularVelocity(0.5f);
 }
