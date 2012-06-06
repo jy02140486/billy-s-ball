@@ -17,6 +17,7 @@ public:
 	b2World *world;
 	b2Vec2 worldAxis;
 	b2AABB aabb;
+	int screenH;
 
 	//CLs'
 	CL_GraphicContext *gc_ref;
@@ -49,7 +50,7 @@ public:
 	b2BodyDef		catapultbodydef;
 	b2Body	*		catapult;
 
-	void Initialize();
+	void Initialize(CL_GraphicContext*gc,int screen_high);
 	void drawCircle(CL_GraphicContext *gc,b2Body *bodyref);
 
 	DataPool();

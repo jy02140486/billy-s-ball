@@ -6,12 +6,22 @@ bool T_App::init()
 {
 	try
 	{
-	
+	mpConsole = new CL_ConsoleWindow("Console", 80, 100);
 	//initail window description
 	mWinDesc.set_title("Billy's Ball");
 	mWinDesc.set_allow_resize(false);
 	mWinDesc.show_maximize_button(false);
-	mWinDesc.set_size(CL_Size (640, 848), false);
+	
+	CL_ScreenInfo screen_info;
+	int primary_screen;
+	std::vector<CL_Rect> rects = screen_info.get_screen_geometries(primary_screen);
+	for (std::vector<CL_Rect>::size_type i=0; i<rects.size(); i++)
+	{
+		CL_Console::write_line("Screen geometry: l:%1 t:%2  r:%3 b:%4 %5", rects[i].left, rects[i].top, rects[i].right, rects[i].bottom, i == primary_screen ? cl_format("- Primary (%1)", i) : "" );
+	}
+	
+	const int h=rects[0].bottom-80;
+	mWinDesc.set_size(CL_Size (640,h), false);
 
 	
 	CL_String resource("Res/GUITheme/resources.xml");
@@ -52,10 +62,10 @@ bool T_App::init()
 	//mJoystick = mInput.get_joystick();
 
 
-	mpConsole = new CL_ConsoleWindow("Console", 80, 100);
+	
 
-	_datapool.gc_ref=&mpDisplayWindow->get_gc();
-	_datapool.Initialize();
+	
+	_datapool.Initialize(&mpDisplayWindow->get_gc(),h);
 	//LibDebugOnConsole();
 
 	slot_stateChanged=sig_state.connect(this,&T_App::OnStateChange);
