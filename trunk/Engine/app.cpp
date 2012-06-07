@@ -115,14 +115,14 @@ void T_App::onKeyboardDown(const CL_InputEvent &key,
 		if (key.id==CL_KEY_A)
 		{
 			_datapool.tempbox->SetAngularVelocity(-0.2f);
-			temp.Set(-40,0);
+			temp.Set(-80,0);
 			_datapool.kPlatform->SetLinearVelocity(temp);
 		}
 
 		if (key.id==CL_KEY_D)
 		{
 			_datapool.tempbox->SetAngularVelocity(0.2f);
-			temp.Set(40,0);
+			temp.Set(80,0);
 			_datapool.kPlatform->SetLinearVelocity(temp);
 		}
 		break;

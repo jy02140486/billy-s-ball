@@ -75,7 +75,7 @@ void DataPool::Initialize(CL_GraphicContext*gc,int screen_high)
 
 
 	//kinematic plaform
-	kPlatformDef.position.Set(50.0f,(float32)((2*scrhref)/5));
+	kPlatformDef.position.Set(150.0f,(float32)((2*scrhref)/5));
 	kPlatformDef.type=b2_kinematicBody;
 	kPlatform=world->CreateBody(&kPlatformDef);
 	kPlatformShape.SetAsBox(80,5);
@@ -105,6 +105,26 @@ void DataPool::Initialize(CL_GraphicContext*gc,int screen_high)
 	setConvexVertex(&catapultshape,3,40);
 	catapult->CreateFixture(&catapultshape,50);
 	catapult->SetAngularVelocity(0.5f);
+
+	//sides
+	sidesdef.position.Set(240,scrhref/2);
+	sidesdef.type=b2_staticBody;
+	sideL=world->CreateBody(&sidesdef);
+	b2PolygonShape sideshapeL;
+	p1.Set(-220,-2*scrhref);
+	p2.Set(-220,2*scrhref);
+	sideshapeL.SetAsEdge(p1,p2);
+	b2Fixture* fs=sideL->CreateFixture(&sideshapeL,0);
+	fs->SetRestitution(0.8);
+
+	sidesdef.position.Set(380,scrhref/2);
+	b2PolygonShape sideshapeR;
+	p1.Set(220,-2*scrhref);
+	p2.Set(220,2*scrhref);
+	sideshapeR.SetAsEdge(p1,p2);
+	sideR=world->CreateBody(&sidesdef);
+	fs=sideR->CreateFixture(&sideshapeR,0);
+	fs->SetRestitution(0.8);
 }
 
 void DataPool::drawCircle( CL_GraphicContext *gc,b2Body *bodyref )
