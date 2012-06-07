@@ -55,6 +55,15 @@ public:
 	b2BodyDef		sidesdef;
 	
 
+	//renders
+	CL_Vec4f 		red_color;
+	CL_Vec4f 		green_color;
+	CL_Vec4f 		colour_grey;
+	CL_Vec2i		positions[8];
+	CL_Vec4f		colors[8];
+	CL_Vec4f		ground[8];
+
+
 	void Initialize(CL_GraphicContext*gc,int screen_high);
 	void drawCircle(CL_GraphicContext *gc,b2Body *bodyref);
 
@@ -67,5 +76,6 @@ public:
 	void OnBulletTimeUp();
 	void drawall();
 	void drawCenterPoint( CL_GraphicContext *gc,b2Body *bodyref );
+	void setRenderers();
 };
 #endif

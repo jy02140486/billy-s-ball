@@ -1,5 +1,6 @@
 #include "data_pool.h"
 #include "../Engine/globals.h"
+#include "../Libs/RandomVal.h"
 
 #define M_PI       3.14159265358979323846
 
@@ -38,7 +39,8 @@ void DataPool::Initialize(CL_GraphicContext*gc,int screen_high)
 	b2CircleShape tempball;
 	tempball.m_radius=20;
 
-	tempbody->CreateFixture(&tempball,10);
+	b2Fixture *ballf=tempbody->CreateFixture(&tempball,10);
+	ballf->SetFriction(0.4);
 	tempbody->SetUserData(this);
 
 	b2PolygonShape tempboxdef;
@@ -64,7 +66,7 @@ void DataPool::Initialize(CL_GraphicContext*gc,int screen_high)
 
 	Billy->CreateFixture(&tempboxdef,1);
 
-	b2Vec2 rightward(40,0);
+	b2Vec2 rightward(35,0);
 	Billy->SetLinearVelocity(rightward);
 	int *i=new int(1);
 	Billy->SetUserData(i);
@@ -125,8 +127,34 @@ void DataPool::Initialize(CL_GraphicContext*gc,int screen_high)
 	sideR=world->CreateBody(&sidesdef);
 	fs=sideR->CreateFixture(&sideshapeR,0);
 	fs->SetRestitution(0.8);
+
+	setRenderers();
 }
 
+void DataPool::setRenderers()
+{
+	CL_Vec4f *c1=new CL_Vec4f(1.0f, 0.0f, 0.0f, 1.0f);
+	CL_Vec4f *c2=new CL_Vec4f(0.0f, 1.0f, 0.0f, 1.0f);
+	CL_Vec4f *c3=new CL_Vec4f(128.0f, 128.0f,128.0f, 128.0f);
+	red_color=*c1;
+	green_color=*c2;
+	colour_grey=*c3;
+
+	
+	for (int i=0;i<8;i++)
+	{
+		if (RandomVal::randombool())
+		{
+			colors[i]=red_color;
+		}else
+			colors[i]=green_color;
+		ground[i]=colour_grey;
+	}
+	
+	delete c1,c2,c3;
+
+
+}
 void DataPool::drawCircle( CL_GraphicContext *gc,b2Body *bodyref )
 {
 	CL_Draw::circle(*gc,
@@ -174,19 +202,9 @@ void DataPool::drawbox(CL_GraphicContext *gc,b2Body *bodyref)
 {
 	b2PolygonShape* shape=(b2PolygonShape*)bodyref->GetFixtureList()->GetShape();
 
-
-	CL_Vec4f red_color(1.0f, 0.0f, 0.0f, 1.0f);
-	CL_Vec4f green_color(0.0f, 1.0f, 0.0f, 1.0f);
-	CL_Vec4f colour_grey(128.0f, 128.0f,128.0f, 128.0f);
-
-
-
 	const int vn=shape->GetVertexCount();
-	CL_Vec2i positions[8];
-	CL_Vec4f colors[] = { red_color, green_color,red_color, green_color,red_color, green_color,red_color, green_color};
-	CL_Vec4f ground[]={colour_grey,colour_grey,colour_grey,colour_grey,colour_grey,colour_grey,colour_grey,colour_grey};
-
-
+	
+	 
 	float32 angle=b2_pi/shape->m_vertexCount;
 
 	b2Transform tmptf=bodyref->GetTransform();
@@ -204,10 +222,10 @@ void DataPool::drawbox(CL_GraphicContext *gc,b2Body *bodyref)
 	vecs.set_attributes(0,positions);
 
 
-//	if (bodyref->GetType()==b2_dynamicBody)
+	if (bodyref->GetType()==b2_dynamicBody||bodyref->GetType()==b2_kinematicBody)
 		vecs.set_attributes(1,colors);
-// 	else
-// 		vecs.set_attributes(1,ground);
+	else
+		vecs.set_attributes(1,ground);
 
 	gc->set_program_object(cl_program_color_only);
 	gc->draw_primitives(cl_line_loop,vn,vecs);
