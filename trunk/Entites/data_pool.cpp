@@ -230,7 +230,7 @@ void DataPool::Reset()
 	bodyDef.type=b2_dynamicBody;
 
 
-	bodyDef.position.Set(220,(float32)scrhref/5);
+	bodyDef.position.Set(180,0);
 	tempbody=world->CreateBody(&bodyDef);
 
 	//reset the turning box
@@ -258,7 +258,7 @@ void DataPool::Reset()
 	{
 		world->DestroyBody(kPlatform);
 	}
-	kPlatformDef.position.Set(50.0f,(float32)((2*scrhref)/5));
+	kPlatformDef.position.Set(150.0f,(float32)((2*scrhref)/5));
 	kPlatformDef.type=b2_kinematicBody;
 	kPlatform=world->CreateBody(&kPlatformDef);
 	kPlatformShape.SetAsBox(80,5);
