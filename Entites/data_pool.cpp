@@ -18,7 +18,7 @@ void DataPool::Initialize(CL_GraphicContext*gc,int screen_high)
 	b2Vec2 gravity(0.0f, 10.0f);
 	world=new b2World(gravity,true);
 
-	timeStep =44;
+	timeStep =24;
 	velocityIterations = 4;
 	positionIterations = 2 ;
 
