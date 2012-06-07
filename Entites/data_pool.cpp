@@ -102,9 +102,9 @@ void DataPool::Initialize(CL_GraphicContext*gc,int screen_high)
 	catapultbodydef.position.Set(340,2*scrhref/3);
 	catapultbodydef.type=b2_kinematicBody;
 	catapult=world->CreateBody(&catapultbodydef);
-	setConvexVertex(&catapultshape,3,40);
+	b2Vec2 offset(0,20);
+	setConvexVertex(&catapultshape,3,40,offset);
 	catapult->CreateFixture(&catapultshape,50);
-	catapult->SetAngularVelocity(0.5f);
 
 	//sides
 	sidesdef.position.Set(240,scrhref/2);
@@ -134,6 +134,15 @@ void DataPool::drawCircle( CL_GraphicContext *gc,b2Body *bodyref )
 		bodyref->GetPosition().y,
 		bodyref->GetFixtureList()->GetShape()->m_radius,
 		CL_Colorf::blueviolet);
+}
+
+void DataPool::drawCenterPoint( CL_GraphicContext *gc,b2Body *bodyref )
+{
+	CL_Draw::circle(*gc,
+		bodyref->GetPosition().x,
+		bodyref->GetPosition().y,
+		5,
+		CL_Colorf::cadetblue);
 }
 
 void DataPool::update()
@@ -265,12 +274,24 @@ void DataPool::Reset()
 	b2Fixture * kpf=kPlatform->CreateFixture(&kPlatformShape,50);
 	kpf->SetRestitution(0.5f);
 	kpf->SetFriction(0.4f);
+
+	//reset the catapult
+	if (catapult!=NULL)
+	{
+		world->DestroyBody(catapult);
+	}
+	catapultbodydef.position.Set(340,2*scrhref/3);
+	catapultbodydef.type=b2_kinematicBody;
+	catapult=world->CreateBody(&catapultbodydef);
+	b2Vec2 offset(0,20);
+	setConvexVertex(&catapultshape,3,40,offset);
+	catapult->CreateFixture(&catapultshape,50);
 }
 
 
 
 //set vertexes Attributes
-void DataPool::setConvexVertex(b2PolygonShape *shapeDef,int n,float32 radius) 
+void DataPool::setConvexVertex(b2PolygonShape *shapeDef,int n,float32 radius,b2Vec2 offsetxy) 
 
 {  
 	shapeDef->m_vertexCount = n;  
@@ -283,11 +304,11 @@ void DataPool::setConvexVertex(b2PolygonShape *shapeDef,int n,float32 radius)
 
 	for (int i= 0; i < n;i++ )  
 	{  
-		dx = radius * cos(angle * i-angle/2);  
-		dy = radius *sin(angle * i-angle/2);  
+		dx = radius * cos(angle * i-angle/2)+offsetxy.x;  
+		dy = radius *sin(angle * i-angle/2)+offsetxy.y;  
 		shapeDef->m_vertices[i].Set(dx,dy);  
 
-		CL_Console::write_line("v%1 x=%2 y=%3",i,dx,dy);
+	//	CL_Console::write_line("v%1 x=%2 y=%3",i,dx,dy);
 	}  
 
 
@@ -327,6 +348,8 @@ void DataPool::drawall()
 		else if(itr->GetFixtureList()->GetShape()->GetType()==bulletshape.e_polygon)
 		{
 			drawbox(gc_ref,itr);
+			if(itr->GetType()!=b2_staticBody)
+			drawCenterPoint(gc_ref,itr);			
 		}
 	}
 }

@@ -63,8 +63,9 @@ public:
 	void drawbox(CL_GraphicContext *gc,b2Body *bodyref);
 	void drawBilly(CL_GraphicContext *gc,b2Body *bodyref);
 	void Reset();
-	void setConvexVertex(b2PolygonShape *shapeDef,int n,float32 radius);
+	void setConvexVertex(b2PolygonShape *shapeDef,int n,float32 radius,b2Vec2 offsetxy);
 	void OnBulletTimeUp();
 	void drawall();
+	void drawCenterPoint( CL_GraphicContext *gc,b2Body *bodyref );
 };
 #endif
