@@ -85,6 +85,8 @@ void T_App::onKeyboardUp(const CL_InputEvent &key,
 		_datapool.tempbox->SetAngularVelocity(0);
 		temp.Set(0,0);
 		_datapool.kPlatform->SetLinearVelocity(temp);
+		_datapool.catapult->SetAngularVelocity(0);
+		_datapool.catapult->SetLinearVelocity(temp);
 	}
 
 	if (key.id==CL_KEY_D)
@@ -92,6 +94,8 @@ void T_App::onKeyboardUp(const CL_InputEvent &key,
 		_datapool.tempbox->SetAngularVelocity(0);
 		temp.Set(0,0);
 		_datapool.kPlatform->SetLinearVelocity(temp);
+		_datapool.catapult->SetAngularVelocity(0);
+		_datapool.catapult->SetLinearVelocity(temp);
 	}
 }
 
@@ -117,6 +121,9 @@ void T_App::onKeyboardDown(const CL_InputEvent &key,
 			_datapool.tempbox->SetAngularVelocity(-0.2f);
 			temp.Set(-80,0);
 			_datapool.kPlatform->SetLinearVelocity(temp);
+			_datapool.catapult->SetAngularVelocity(-0.4f);
+			temp.Set(-60,0);
+			_datapool.catapult->SetLinearVelocity(temp);
 		}
 
 		if (key.id==CL_KEY_D)
@@ -124,6 +131,9 @@ void T_App::onKeyboardDown(const CL_InputEvent &key,
 			_datapool.tempbox->SetAngularVelocity(0.2f);
 			temp.Set(80,0);
 			_datapool.kPlatform->SetLinearVelocity(temp);
+			_datapool.catapult->SetAngularVelocity(0.4f);
+			temp.Set(60,0);
+			_datapool.catapult->SetLinearVelocity(temp);
 		}
 		break;
 	}
