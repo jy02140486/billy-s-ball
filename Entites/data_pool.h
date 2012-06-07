@@ -50,6 +50,11 @@ public:
 	b2BodyDef		catapultbodydef;
 	b2Body	*		catapult;
 
+	//sides
+	b2Body *		sideL,*sideR;
+	b2BodyDef		sidesdef;
+	
+
 	void Initialize(CL_GraphicContext*gc,int screen_high);
 	void drawCircle(CL_GraphicContext *gc,b2Body *bodyref);
 
