@@ -1,0 +1,1 @@
+Use A D to turn platforms, make Billy's ball fall right on him to return it
